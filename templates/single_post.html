@@ -1,0 +1,104 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% include "header.html" %}
+<div class="'wrapper">
+
+    <section class="single-blog-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="border-top">
+                        <div class="col-md-12">
+                            <div class="blog-area">
+                                <div class="blog-area-part">
+                                    <h2>{{post.title}}</h2>
+                                    <div class="for-style">
+                                        <p><span class="drop_caps">{{post.body[3] | safe }}</span>{{".
+                                            ".join(post.body[4:].split(".")[:2]) | safe }}.</p>
+                                    </div>
+                                    <img src="{{post.img_url}}" alt="">
+                                    <p>{{". ".join(post.body.split(".")[2:])| safe }}</p>
+                                </div>
+                                <div class="commententries">
+                                    <h3>Comments</h3>
+
+                                    <ul class="commentlist">
+
+
+                                        {% for comment in comments %}
+                                        <li>
+                                            <article class="comment">
+                                                <section class="comment-details">
+                                                    <div class="author-name">
+                                                        <h5><a href="#">{{comment.comment_author.name}}</a></h5>
+                                                        <p>{{comment.date}}</p>
+                                                    </div>
+                                                    <div class="comment-body">
+                                                        <p>{{comment.text | safe}}</p>
+                                                    </div>
+                                                    <script type="text/javascript"
+                                                            src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+                                                    <div class="reply">
+                                                        <p><span>
+                                                                <a onclick="return false;" href="#"><i
+                                                                        onClick="like()"
+                                                                        class="fa fa-thumbs-up like-counter"
+                                                                        aria-hidden="true"></i></a><span id="like">{{comment.likes}}</span></span>
+                                                        </p>
+                                                        <script type="text/javascript">
+
+var commentId = {{comment.id}};
+var authorId = {{current_user.id}};
+function like(){
+    const dict = JSON.stringify({commentId, authorId});
+    $.ajax({
+            url:"/add_like",
+            type:"POST",
+            contentType: "application/json",
+            data: dict,
+            success: function(data) {
+                console.log(data);
+                console.debug(data);
+                document.getElementById("like").innerHTML=data.like_count;
+            },
+    });
+
+
+}
+
+
+
+
+
+
+
+                                                        </script>
+                                                    </div>
+                                                </section>
+                                            </article>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                </div>
+                                <div class="container forms">
+                                    <div style="color:red">
+                                        {% for message in get_flashed_messages() %}
+                                        {{message}}
+                                        {% endfor%}
+                                    </div>
+
+                                    {{ wtf.quick_form(form, button_map={"submit": "primary"}, novalidate=True) }}
+
+                                    {{ ckeditor.load() }}
+                                    {{ ckeditor.config(name='comment') }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% include "footer.html" %}

@@ -1,0 +1,19 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% include "header.html" %}
+<div class="wrapper">
+    <section class="bg-text-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="bg-text">
+                        <h3>Contact me</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container forms">
+    {{ wtf.quick_form(form, button_map={"submit": "primary"}, novalidate=True) }}
+    </div>
+</div>
+{% include "footer.html" %}

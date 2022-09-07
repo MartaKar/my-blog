@@ -1,0 +1,50 @@
+{% include "header.html" %}
+<div class="wrapper">
+        <section class="bg-text-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bg-text">
+                            <h3>Classic BLOG Design</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="blog-post-area">
+            <div class="container">
+                <div class="row">
+                    <div class="blog-post-area-style">
+
+                            <div class="col-md-12">
+                                <div class="single-post-big">
+                                    <div class="big-image">
+                                        <img src="{{big_post.img_url}}">
+                                    </div>
+                                    <div class="big-text">
+                                        <h3><a href="{{ url_for('show_post', post_id=big_post.id)}}">{{big_post.title}}</a></h3>
+                                        <p>{{big_post.subtitle}}</p>
+                                        <h4><span class="date">{{big_post.date}}</span>  <a href="{{ url_for('delete', post_id=big_post.id)}}"><i class="fa fa-trash"></i></a>  <a href="{{ url_for('edit', post_id=big_post.id)}}"><i class="fa fa-pencil"></i></a><span class="author">Posted By: <span class="author-name">{{big_post.author.name}}</span></span>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        {% for post in all_posts[:(big_post.id-1)] %}
+                            <div class="col-md-3">
+                                <div class="single-post">
+                                    <img src="{{post.img_url}}" alt="image">
+                                    <h3><a href="">{{post.title}}</a></h3>
+                                    <h4><span>Posted By: <span class="author-name">{{post.author.name}}</span></span>
+                                    </h4>
+                                    <p>{{post.subtitle}}</p>
+                                    <h4><span>{{post.date}}</span>&nbsp;<a href="{{ url_for('delete', post_id=post.id)}}"><i class="fa fa-trash"></i></a>  <a href="{{ url_for('edit', post_id=post.id)}}"><i class="fa fa-pencil"></i></a></h4>
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% include "footer.html" %}
